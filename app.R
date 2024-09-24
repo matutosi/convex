@@ -2,7 +2,7 @@ library(colourpicker)
 library(openxlsx)
 library(shiny)
 
-source("D:/matu/work/ToDo/convex/R/convex.R")
+source("convex.R")
 
 ui <- 
   fluidPage(
@@ -11,12 +11,14 @@ ui <-
       sidebarPanel(
         # uplaod
         fileInput("upload", 
-                  "Select a xlsx or xls file",
-                  accept = c(".xlsx", "xls")),
+                  "Select xlsx or xls file(s)",
+                  accept = c(".xlsx", "xls"),
+                  multiple = TRUE),
          # download
          downloadButton("dl", "Download")
       ),
-      mainPanel(
+
+            mainPanel(
         textInput("bg_string", 
           "Highlighting string \u5f37\u8abf\u6587\u5b57", 
           width = 500, 
@@ -25,10 +27,10 @@ ui <-
           "Highlighting color \u8272", 
           value = "yellow"),
 
-         numericInput("f_row", 
+         numericInput("freeze_row", 
            "Freeze rows \u56fa\u5b9a\u884c", 
            value = 1, min = 0, width = 150),
-         numericInput("f_col", 
+         numericInput("freeze_col", 
            "Freeze cols \u56fa\u5b9a\u5217",
            value = 1, min = 0, width = 150),
 
@@ -43,42 +45,62 @@ ui <-
     )
   )
 
-server <- function(input, output) {
-  workbook <- reactive({
+server <- function(input, output){
+  workbooks <- reactive({
     req(input$upload)
-    wb <- openxlsx::loadWorkbook(input$upload$datapath)
+    wbs <- 
+      input$upload$datapath |> 
+      purrr::map(openxlsx::loadWorkbook)
 
-    walk_wb(wb, set_bg_color, 
-      color = input$bg_color, 
-      strings = stringr::str_split_1(input$bg_string, ";|,"))
+    wbs |> 
+      purrr::map(
+        walk_wb, set_bg_color, 
+        color = input$bg_color, 
+        strings = stringr::str_split_1(input$bg_string, ";|,"))
 
     if(input$set_auto_filter){
-      walk_wb(wb, add_filter)
+      wbs |> 
+        purrr::map(walk_wb, add_filter)
     }
 
     if(input$set_col_width){
-      walk_wb(wb, set_col_width)
+      wbs |> 
+        purrr::map(walk_wb, set_col_width)
     }
 
-    walk_wb(wb, freeze_pane, 
-      firstActiveRow = input$f_row + 1, # active: freeze + 1
-      firstActiveCol = input$f_col + 1)
+    wbs |> 
+      purrr::map(walk_wb, freeze_pane, 
+      firstActiveRow = input$freeze_row + 1, # active: freeze + 1
+      firstActiveCol = input$freeze_col + 1)
 
-    wb
+    wbs
   })
 
+  now <- 
+    Sys.time() |> 
+    format("%Y-%m-%d_%X") |> 
+    stringr::str_replace_all(":", "_")
+  
   output$dl <- downloadHandler(
-    filename = function(){ 
-      paste0(tools::file_path_sans_ext(input$upload$name), 
-             Sys.time() |> 
-               format("%Y-%m-%d_%X") |> 
-               stringr::str_replace_all(":", "_"), 
-             ".xlsx")
+    filename = function(){
+      wbs <- workbooks()
+      if(length(wbs) == 1){
+        paste0(tools::file_path_sans_ext(input$upload$name), 
+               now, ".xlsx")
+      }else{
+        paste0("convex", now, ".zip")
+      }
     },
     content = function(file){
-      openxlsx::saveWorkbook(workbook(), 
-                             file = file, 
-                             overwrite = TRUE)
+      wbs <- workbooks()
+      if(length(wbs) == 1){
+        return(openxlsx::saveWorkbook(wbs[[1]], file = file, overwrite = TRUE))
+      }else{
+        files <- paste0(tools::file_path_sans_ext(input$upload$name), 
+                        now, ".xlsx")
+        purrr::walk2(wbs, files, openxlsx::saveWorkbook)
+        return(utils::zip(zipfile = file, files = files))
+      }
     }
   )
 }
