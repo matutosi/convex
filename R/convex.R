@@ -7,7 +7,7 @@ walk_wb <- function(wb, fun, ...){
   # wrapper for freezePane()
 freeze_pane <- function(wb, sheet, ...){
   openxlsx::freezePane(wb, sheet, ...)
-  #   openxlsx::freezePane(wb, sheet, firstRow = TRUE, firstCol = TRUE)
+  # openxlsx::freezePane(wb, sheet, firstRow = TRUE, firstCol = TRUE)
 }
 
   # wrapper for addFilter()
