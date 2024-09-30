@@ -22,8 +22,13 @@ pivoteaUI <- function(id){
 pivoteaServer <- function(id){
   moduleServer(id, function(input, output, session){
 
+    df <- reactive({
+  #       pivotea::hogwarts
+      req(input$upload)
+      openxlsx::read.xlsx(input$upload$datapath)
+    })
+
     choices <- reactive({
-  #       req(input$upload)
       colnames(df())
     })
 
@@ -32,11 +37,6 @@ pivoteaServer <- function(id){
     observeEvent(df(), updateSelectInput(session, inputId = "col"  , choices = choices(), selected = choices()[2]))
     observeEvent(df(), updateSelectInput(session, inputId = "value", choices = choices(), selected = choices()[3]))
     observeEvent(df(), updateSelectInput(session, inputId = "split", choices = choices(), selected = choices()[4]))
-
-    df <- reactive({
-  #       openxlsx::read.xlsx(input$upload$datapath)
-      pivotea::hogwarts
-    })
 
     output$data <- reactable::renderReactable({
       reactable::reactable(df(), resizable = TRUE, filterable = TRUE)
@@ -53,7 +53,11 @@ pivoteaServer <- function(id){
     })
 
     output$pivot <- renderTable({
+      if(is.data.frame(table())){
+        table()
+      }else{
         table()[[1]]
+      }
     })
 
   })

@@ -1,11 +1,18 @@
-fileUI <- function(id){
+fileUI <- function(id, multiple = TRUE){
   ns <- NS(id)
-  sidebarPanel(
-    fileInput(ns("upload"), "Select xlsx or xls file(s)",
+  label <- dplyr::if_else(multiple,
+                          "Select xlsx file(s)",
+                          "Select an xlsx file")
+  tagList(
+    fileInput(ns("upload"), label,
               accept = c(".xlsx"),
-              multiple = TRUE),
+              multiple = multiple),
 
-    downloadButton(ns("dl"), "Download")
+    tags$hr(),
+
+    downloadButton(ns("dl"), "Download"),
+
+    tags$hr(),
   )
 }
 

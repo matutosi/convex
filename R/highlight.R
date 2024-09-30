@@ -1,7 +1,7 @@
 ## ui
 highlightUI <- function(id){
   ns <- NS(id)
-  mainPanel(
+  tagList(
     textInput(ns("bg_string"), 
       "Highlighting string \u5f37\u8abf\u6587\u5b57", 
       width = 500, 
