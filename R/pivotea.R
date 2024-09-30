@@ -4,10 +4,18 @@ pivoteaUI <- function(id){
   tagList(
 
     # Choices
-    selectInput(ns("row"), "行"          , choices = character(0), multiple = TRUE),
-    selectInput(ns("col"), "列"          , choices = character(0), multiple = TRUE),
-    selectInput(ns("value"), "セルの値"  , choices = character(0), multiple = TRUE),
-    selectInput(ns("split"), "シート分割", choices = character(0), multiple = TRUE),
+    checkboxGroupInput(ns("row_1")  , "行1"        , inline = TRUE),
+    checkboxGroupInput(ns("row_2")  , "行2"        , inline = TRUE),
+    checkboxGroupInput(ns("row_3")  , "行3"        , inline = TRUE),
+    checkboxGroupInput(ns("col_1")  , "列1"        , inline = TRUE),
+    checkboxGroupInput(ns("col_2")  , "列2"        , inline = TRUE),
+    checkboxGroupInput(ns("col_3")  , "列3"        , inline = TRUE),
+    checkboxGroupInput(ns("value_1"), "セルの値1"  , inline = TRUE),
+    checkboxGroupInput(ns("value_2"), "セルの値2"  , inline = TRUE),
+    checkboxGroupInput(ns("value_3"), "セルの値3"  , inline = TRUE),
+    checkboxGroupInput(ns("split_1"), "シート分割1", inline = TRUE),
+    checkboxGroupInput(ns("split_2"), "シート分割2", inline = TRUE),
+    checkboxGroupInput(ns("split_3"), "シート分割3", inline = TRUE),
 
     textInput(ns("sep"), "区切り文字", "_"),
 
@@ -28,34 +36,41 @@ pivoteaServer <- function(id){
     })
 
     # Update choices
-    observeEvent(df(), updateSelectInput(session, inputId = "row"  , choices = choices()))
-    observeEvent(df(), updateSelectInput(session, inputId = "col"  , choices = choices()))
-    observeEvent(df(), updateSelectInput(session, inputId = "value", choices = choices()))
-    observeEvent(df(), updateSelectInput(session, inputId = "split", choices = choices()))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "row_1"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "row_2"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "row_3"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "col_1"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "col_2"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "col_3"  , choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "value_1", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "value_2", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "value_3", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "split_1", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "split_2", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "split_3", choices = choices(), inline = TRUE))
 
     df <- reactive({
   #       openxlsx::read.xlsx(input$upload$datapath)
       pivotea::hogwarts
     })
 
-    output$data <- renderTable({
-      df()
+    output$data <- reactable::renderReactable({
+      reactable::reactable(df(), resizable = TRUE, filterable = TRUE)
     })
 
     table <- reactive({
       df() |>
-        pivotea::pivot(row         = input$row        ,
-                       col         = input$col        ,
-                       value       = input$value      ,
-                       split       = input$split      ,
+        pivotea::pivot(row         = c(input$row_1  , input$row_2  , input$row_3  ),
+                       col         = c(input$col_1  , input$col_2  , input$col_3  ),
+                       value       = c(input$value_1, input$value_2, input$value_3),
+                       split       = c(input$split_1, input$split_2, input$split_3),
                        sep         = input$sep        ,
                        rm_empty_df = input$rm_empty_df)
     })
 
     output$pivot <- renderTable({
-      table()[[1]]
+        table()[[1]]
     })
-
 
   })
 }
