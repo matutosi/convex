@@ -1,19 +1,31 @@
 navbarPage("convex: for Convenient Excel",
 
-  # # # highlight # # #
-  tabPanel("highlight",
-    sidebarLayout(
-      fileUI("highlight"),
-      highlightUI("highlight"),
-    )
-  ),
-
   # # # pivotea # # #
   tabPanel("pivotea",
     sidebarLayout(
-      fileUI("pivotea"),
-      highlightUI("pivotea"),
-      #       pivoteaUI("pivotea"),
+      sidebarPanel(
+        fileUI("pivotea", multiple = FALSE),
+        pivoteaUI("pivotea"),
+      ),
+      mainPanel(
+        tabsetPanel(type = "tabs",
+          tabPanel("data", reactable::reactableOutput(NS("pivotea", "data"))),
+          tabPanel("pivot", tableOutput(NS("pivotea", "pivot"))),
+        )
+      )
+    )
+  ),
+
+
+  # # # highlight # # #
+  tabPanel("highlight",
+    sidebarLayout(
+      sidebarPanel(
+        fileUI("highlight"),
+      ),
+      mainPanel(
+        highlightUI("highlight"),
+      )
     )
   ),
 
