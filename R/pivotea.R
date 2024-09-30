@@ -4,10 +4,10 @@ pivoteaUI <- function(id){
   tagList(
 
     # Choices
-    checkboxGroupInput(ns("row")  , "行"        , inline = TRUE),
-    checkboxGroupInput(ns("col")  , "列"        , inline = TRUE),
-    checkboxGroupInput(ns("value"), "セルの値"  , inline = TRUE),
-    checkboxGroupInput(ns("split"), "シート分割", inline = TRUE),
+    selectInput(ns("row"), "行"          , choices = character(0), multiple = TRUE),
+    selectInput(ns("col"), "列"          , choices = character(0), multiple = TRUE),
+    selectInput(ns("value"), "セルの値"  , choices = character(0), multiple = TRUE),
+    selectInput(ns("split"), "シート分割", choices = character(0), multiple = TRUE),
 
     textInput(ns("sep"), "区切り文字", "_"),
 
@@ -28,10 +28,10 @@ pivoteaServer <- function(id){
     })
 
     # Update choices
-    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "row"  , choices = choices(), inline = TRUE))
-    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "col"  , choices = choices(), inline = TRUE))
-    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "value", choices = choices(), inline = TRUE))
-    observeEvent(df(), updateCheckboxGroupInput(session, inputId = "split", choices = choices(), inline = TRUE))
+    observeEvent(df(), updateSelectInput(session, inputId = "row"  , choices = choices(), selected = choices()[1]))
+    observeEvent(df(), updateSelectInput(session, inputId = "col"  , choices = choices(), selected = choices()[2]))
+    observeEvent(df(), updateSelectInput(session, inputId = "value", choices = choices(), selected = choices()[3]))
+    observeEvent(df(), updateSelectInput(session, inputId = "split", choices = choices(), selected = choices()[4]))
 
     df <- reactive({
   #       openxlsx::read.xlsx(input$upload$datapath)
