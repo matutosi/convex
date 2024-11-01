@@ -18,13 +18,13 @@ highlightUI <- function(id){
     #            "Freeze cols \u56fa\u5b9a\u5217",
     #            value = 1, min = 0, width = 150),
 
-    checkboxInput(ns("set_col_width"), 
-     "Auto col width \u81ea\u52d5\u5e45\u8a2d\u5b9a", 
-     value = FALSE),
-
-    checkboxInput(ns("set_auto_filter"), 
-     "Set autofilter \u30aa\u30fc\u30c8\u30d5\u30a3\u30eb\u30bf", 
-     value = FALSE)
+  #     checkboxInput(ns("set_col_width"), 
+  #      "Auto col width \u81ea\u52d5\u5e45\u8a2d\u5b9a", 
+  #      value = FALSE),
+  # 
+  #     checkboxInput(ns("set_auto_filter"), 
+  #      "Set autofilter \u30aa\u30fc\u30c8\u30d5\u30a3\u30eb\u30bf", 
+  #      value = FALSE)
   )
 }
 
@@ -34,32 +34,38 @@ highlightServer <- function(id){
     req(input$upload)
 
     wbs <- 
-      input$upload$datapath |> 
-      purrr::map(openxlsx::loadWorkbook)
+        input$upload$datapath |> 
+        purrr::map(openxlsx::loadWorkbook)
+    
+    col <- reactive(input$bg_color)
+    str <- reactive(input$bg_string)
+    wid <- reactive(input$set_col_width)
+    fil <- reactive(input$set_auto_filter)
 
     wbs |> 
       purrr::map(
         walk_wb, set_bg_color, 
-        color = input$bg_color, 
-        strings = stringr::str_split_1(input$bg_string, ";|,"))
+        color = col(), 
+        strings = stringr::str_split_1(str(), ";|,"))
 
-  # Not working
-  #     wbs |> 
-  #       purrr::map(walk_wb, freeze_pane, 
-  #       firstActiveRow = input$freeze_row + 1, # active: freeze + 1
-  #       firstActiveCol = input$freeze_col + 1)
+    # Not working
+    #     wbs |> 
+    #       purrr::map(walk_wb, freeze_pane, 
+    #       firstActiveRow = input$freeze_row + 1, # active: freeze + 1
+    #       firstActiveCol = input$freeze_col + 1)
 
-    if(input$set_col_width){
-      wbs |> 
-        purrr::map(walk_wb, set_col_width)
-    }
-
-    if(input$set_auto_filter){
-      wbs |> 
-        purrr::map(walk_wb, add_filter)
-    }
+  #     if(wid()){
+  #       wbs |> 
+  #         purrr::map(walk_wb, set_col_width)
+  #     }
+  # 
+  #     if(fil()){
+  #       wbs |> 
+  #         purrr::map(walk_wb, add_filter)
+  #     }
 
     wbs
+
   })
 
 }
