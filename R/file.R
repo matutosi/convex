@@ -33,6 +33,9 @@ fileServer <- function(id, wbs){
         }
       },
       content = function(file){
+        if(inherits(wbs, "workbook")){
+          return(openxlsx::saveWorkbook(wbs, file = file, overwrite = TRUE))
+        }
         if(length(wbs) == 1){
           return(openxlsx::saveWorkbook(wbs[[1]], file = file, overwrite = TRUE))
         }else{
