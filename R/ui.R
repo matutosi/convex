@@ -8,10 +8,10 @@ navbarPage("convex: for Convenient Excel",
       ),
       mainPanel(
         highlightUI("highlight"),
+        reactable::reactableOutput(NS("highlight", "data")),
       )
     )
   ),
-
 
   # # # pivotea # # #
   tabPanel("pivotea",
