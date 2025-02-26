@@ -36,7 +36,7 @@ highlightServer <- function(id){
     wbs <- 
         input$upload$datapath |> 
         purrr::map(openxlsx::loadWorkbook)
-    
+
     col <- reactive(input$bg_color)
     str <- reactive(input$bg_string)
     wid <- reactive(input$set_col_width)
