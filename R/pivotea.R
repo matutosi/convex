@@ -18,32 +18,13 @@ pivoteaUI <- function(id){
 }
 
 ## server
-pivoteaServer <- function(id){
+pivoteaServer <- function(id, data_in){
   moduleServer(id, function(input, output, session){
 
-    df <- reactive({
-      # req(input$upload)
-      # openxlsx::read.xlsx(input$upload$datapath)
-      pivotea::hogwarts
-    })
-    
-    choices <- reactive({
-      colnames(df())
-    })
-
-    # Update choices
-    observeEvent(df(), updateSelectInput(session, inputId = "row"  , choices = choices(), selected = choices()[1]))
-    observeEvent(df(), updateSelectInput(session, inputId = "col"  , choices = choices(), selected = choices()[2]))
-    observeEvent(df(), updateSelectInput(session, inputId = "value", choices = choices(), selected = choices()[3]))
-    observeEvent(df(), updateSelectInput(session, inputId = "split", choices = choices(), selected = choices()[4]))
-
-    output$data <- reactable::renderReactable({
-      reactable::reactable(df(), resizable = TRUE, filterable = TRUE)
-    })
-
+    # pivot table
     table <- reactive({
-      df() |>
-        pivotea::pivot(row         = input$row        ,
+        pivotea::pivot(data_in(), 
+                       row         = input$row        ,
                        col         = input$col        ,
                        value       = input$value      ,
                        split       = input$split      ,
@@ -51,6 +32,7 @@ pivoteaServer <- function(id){
                        rm_empty_df = input$rm_empty_df)
     })
 
+    # show table
     output$pivot <- renderTable({
       if(is.data.frame(table())){
         table()
@@ -59,16 +41,18 @@ pivoteaServer <- function(id){
       }
     })
 
-  # create a workbook and add data into sheets
-   pivot_wb <- reactive({
-      wb <- openxlsx::createWorkbook()
-      for(i in seq_along(table())){
-        openxlsx::addWorksheet(wb, names(table())[i])
-        openxlsx::writeData(wb, names(table())[i], table()[[i]])
-      }
-      wb
-    })
-  pivot_wb()
+    # create a workbook and add data into sheets
+    wb_pivotea <- reactive({
+       wb <- openxlsx::createWorkbook()
+       for(i in seq_along(table())){
+         openxlsx::addWorksheet(wb, names(table())[i])
+         openxlsx::writeData(wb, names(table())[i], table()[[i]])
+       }
+       wb
+     })
+
+    # return pivoted workbook
+    reactive(wb_pivotea)
 
   })
 }
