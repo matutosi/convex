@@ -1,7 +1,8 @@
 if(!require("colourpicker"))   install.packages("colourpicker")
-  # if(!require("pivotea"))        install.packages("pivotea")
+if(!require("pivotea"))        install.packages("pivotea")
 if(!require("openxlsx"))       install.packages("openxlsx")
 if(!require("reactable"))      install.packages("reactable")
+if(!require("fs"))             install.packages("fs")
 if(!require("shiny"))          install.packages("shiny")
 
 source("convex.R")
