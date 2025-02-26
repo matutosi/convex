@@ -22,11 +22,11 @@ pivoteaServer <- function(id){
   moduleServer(id, function(input, output, session){
 
     df <- reactive({
-  #       pivotea::hogwarts
-      req(input$upload)
-      openxlsx::read.xlsx(input$upload$datapath)
+      # req(input$upload)
+      # openxlsx::read.xlsx(input$upload$datapath)
+      pivotea::hogwarts
     })
-
+    
     choices <- reactive({
       colnames(df())
     })

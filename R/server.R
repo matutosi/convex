@@ -9,8 +9,8 @@ function(input, output, session){
   #     -> reactive がうまくいっていない
   # pivotしたものがダウンロードできない
 
-  #   wb_pivotea <- reactive({ pivoteaServer("pivotea") })
-  #   fileServer("pivotea", wbs = wb_pivotea())
+  wb_pivotea <- reactive({ pivoteaServer("pivotea") })
+  fileServer("pivotea", wbs = wb_pivotea())
 
 
 }
