@@ -14,6 +14,15 @@ pivoteaUI <- function(id){
     checkboxInput(ns("rm_empty_df"), 
      "Remove empty df \u7a7a\u306edf\u3092\u9664\u5916", 
      value = TRUE),
+
+    checkboxInput(ns("borders"), 
+     "Draw borders \u7f6b\u7dda", 
+     value = TRUE),
+
+    checkboxInput(ns("auto_filter"), 
+     "Auto filter \u30aa\u30fc\u30c8\u30d5\u30a3\u30eb\u30bf", 
+     value = TRUE),
+
   )
 }
 
@@ -52,6 +61,13 @@ pivoteaServer <- function(id, data_in){
           openxlsx::addWorksheet(wb, names(table())[i])
           openxlsx::writeData(wb, names(table())[i], table()[[i]])
         }
+      }
+      if(input$borders){
+        walk_wb(wb, add_row_borders)
+        walk_wb(wb, add_col_borders)
+      }
+      if(input$auto_filter){
+        walk_wb(wb, add_filter)
       }
       wb
     })
