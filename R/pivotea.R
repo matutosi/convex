@@ -43,13 +43,18 @@ pivoteaServer <- function(id, data_in){
 
     # create a workbook and add data into sheets
     wb_pivotea <- reactive({
-       wb <- openxlsx::createWorkbook()
-       for(i in seq_along(table())){
-         openxlsx::addWorksheet(wb, names(table())[i])
-         openxlsx::writeData(wb, names(table())[i], table()[[i]])
-       }
-       wb
-     })
+      wb <- openxlsx::createWorkbook()
+      if(is.data.frame(table())){ # no split
+        openxlsx::addWorksheet(wb, "sheet1")
+        openxlsx::writeData(wb, "sheet1", table())
+      }else{
+        for(i in seq_along(table())){
+          openxlsx::addWorksheet(wb, names(table())[i])
+          openxlsx::writeData(wb, names(table())[i], table()[[i]])
+        }
+      }
+      wb
+    })
 
     # return pivoted workbook
     reactive(wb_pivotea)
