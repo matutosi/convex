@@ -47,9 +47,9 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 ## How to use Highlighting
 
--   左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
+-   「highlight」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
 
--   Click "Browse" under "Select xlxs file(s)"\
+-   Click "hilight" tab and click "Browse" under "Select xlxs file(s)"\
     <img src="images/hilight_init.png" width="60%"/>
 
 -   対象のファイルを選択(複数可)\
@@ -73,9 +73,9 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 ## How to use Pivot
 
--   左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
+-   「pivotea」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
 
--   Click "Browse" under "Select xlxs file(s)"\
+-   Click "pivotea" tab and click "Browse" under "Select xlxs file(s)"\
     <img src="images/pivot_init.png" width="60%"/>
 
 -   対象のファイルを選択(1つのみ)．\
@@ -93,9 +93,9 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 -   Pivoted table will be shown in "pivot" tab (first sheet when using split).\
     <img src="images/pivot_preview.png" width="60%"/>
 
--   「Download」をクリック．\
+-   「Download」をクリック．なお，「罫線」をチェックすると項目ごとに罫線が入り，「オートフィルタ」をチェックするとオートフィルタが設定される．\
 
--   Click "Download".\
+-   Click "Download". You can use "border" and "autofilter" by checking button. \
     <img src="images/pivot_output.png" width="60%"/>
 
 ## 引用
