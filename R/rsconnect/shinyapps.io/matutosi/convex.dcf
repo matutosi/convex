@@ -5,8 +5,9 @@ account: matutosi
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13202470
-bundleId: 9857702
+bundleId: 9862251
 url: https://matutosi.shinyapps.io/convex/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: utils_border.R|utils_window.R
