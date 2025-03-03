@@ -21,7 +21,7 @@ new_categ_cols <- function(df, sep = "_", include_end = FALSE, layer = 1){
    categ <- 
     colnames(df) |>
     stringr::str_split(pattern = sep) |>
-    map_chr(`[`, layer)
+    purrr::map_chr(`[`, layer)
   new_categ <- categ != dplyr::lag(categ)
   new_categ <- which(new_categ)
   if(include_end){
