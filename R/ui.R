@@ -4,7 +4,7 @@ navbarPage("convex: for Convenient Excel",
   tabPanel("highlight",
     sidebarLayout(
       sidebarPanel(
-        fileUI("highlight", multiple = TRUE),
+        fileUI("highlight", multiple = TRUE, use_example = FALSE),
       ),
       mainPanel(
         highlightUI("highlight"),
@@ -17,7 +17,7 @@ navbarPage("convex: for Convenient Excel",
   tabPanel("pivotea",
     sidebarLayout(
       sidebarPanel(
-        fileUI("pivotea", multiple = FALSE),
+        fileUI("pivotea", multiple = FALSE, use_example = TRUE),
         pivoteaUI("pivotea"),
       ),
       mainPanel(

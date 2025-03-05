@@ -76,9 +76,13 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 -   Select ONE file   
     <img src="images/pivot_input.png" width="30%"/>   
 
--   「data」にデータが表示されるので，内容を確認可能．行，列，セルの値，シート分割にそれぞれ列名を入力．"区切り文字列は"セルの値に複数入力するときの区切りとして使用．   
--   Input data will be shown in "data" tab, so you can check contents. Input rows, cols, values and split (sheet). "separater" will be used for multiple cell values.   
+-   「data」に1つ目のシートのデータが表示されるので，内容を確認可能．行，列，セルの値，シート分割にそれぞれ列名を入力．"区切り文字列は"セルの値に複数入力するときの区切りとして使用．   
+-   Input data in the first sheet will be shown in "data" tab, so you can check contents. Input rows, cols, values and split (sheet). "separater" will be used for multiple cell values.   
     <img src="images/pivot_setting.png" width="40%"/>   
+
+-   **便利機能**：エクセルの2つ目以降のシートに「setting_for_pivotea」という名前で行，列，セルの値，シート分割の値を保存しておくと，その設定を自動的に使用可能．    
+-   **usefull feature**: Save the values for rows, columns, cells and sheet divisions in the second or later sheet named 'setting_for_pivotea', to use the settings automatically.   
+    <img src="images/pivot_setting_auto.png" width="30%"/>   
 
 -   「pivot」タブを選択するとピボット後の結果が表示される(シート分割しているときは，1シート目)   
 -   Pivoted table will be shown in "pivot" tab (first sheet when using split).   

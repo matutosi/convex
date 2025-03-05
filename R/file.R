@@ -1,5 +1,5 @@
 ## common UI
-fileUI <- function(id, multiple = TRUE){
+fileUI <- function(id, multiple = TRUE, use_example=FALSE){
   ns <- NS(id)
   label <- dplyr::if_else(multiple,
                           "Select xlsx file(s)",
@@ -12,6 +12,12 @@ fileUI <- function(id, multiple = TRUE){
     tags$hr(),
 
     downloadButton(ns("dl"), "Download"),
+
+    tags$hr(),
+
+    if(use_example){
+      checkboxInput(ns("use_example"), "Use example data", value = FALSE)
+    },
 
     tags$hr(),
   )
@@ -56,13 +62,33 @@ highlight_fileServer <- function(id, wbs){
 }
 
 ## Server for pivotea
+read_xlsx_possibly <- purrr::possibly(openxlsx::read.xlsx, otherwise = NULL)
+
+read_settings <- function(path_xlsx, sheet = "setting_for_pivotea"){
+  setting <- read_xlsx_possibly(path_xlsx, sheet = sheet)
+  choices_row   <- dplyr::filter(setting, position=="row")$item
+  choices_col   <- dplyr::filter(setting, position=="col")$item
+  choices_value <- dplyr::filter(setting, position=="value")$item
+  choices_split <- dplyr::filter(setting, position=="split")$item
+  res <- 
+    list(choices_row   = choices_row  , 
+         choices_col   = choices_col  , 
+         choices_value = choices_value, 
+         choices_split = choices_split)
+  return(res)
+}
+
 pivotea_uploadServer <- function(id){
   moduleServer(id, function(input, output, session){
 
     # input
     data_in <- reactive({
-      req(input$upload)
-      openxlsx::read.xlsx(input$upload$datapath, sheet = 1)
+      if(input$use_example){
+        openxlsx::read.xlsx("timetable.xlsx", sheet = 1)
+      }else{
+        req(input$upload)
+        openxlsx::read.xlsx(input$upload$datapath, sheet = 1)
+      }
     })
 
     # show table
@@ -70,14 +96,39 @@ pivotea_uploadServer <- function(id){
         reactable::reactable(data_in(), resizable = TRUE, filterable = TRUE)
     })
 
+    # setting
+    setting <- reactive({
+      if(input$use_example){
+        read_settings("timetable.xlsx")
+      }else{
+        req(input$upload)
+        read_settings(input$upload$datapath)
+      }
+    })
+
     # update choices
     observeEvent(data_in(), {
       choices <- colnames(data_in())
-      updateSelectInput(session, inputId = "row"  , choices = choices, selected = choices[1])
-      updateSelectInput(session, inputId = "col"  , choices = choices, selected = choices[2])
-      updateSelectInput(session, inputId = "value", choices = choices, selected = choices[3])
-      updateSelectInput(session, inputId = "split", choices = choices, selected = choices[4])
+      if(input$use_example){
+        updateSelectInput(session, inputId = "row"  , choices = choices, selected = setting()$choices_row  )
+        updateSelectInput(session, inputId = "col"  , choices = choices, selected = setting()$choices_col  )
+        updateSelectInput(session, inputId = "value", choices = choices, selected = setting()$choices_value)
+        updateSelectInput(session, inputId = "split", choices = choices, selected = setting()$choices_split)
+      }else{
+        if(is.null(setting)){
+          updateSelectInput(session, inputId = "row"  , choices = choices, selected = choices[1])
+          updateSelectInput(session, inputId = "col"  , choices = choices, selected = choices[2])
+          updateSelectInput(session, inputId = "value", choices = choices, selected = choices[3])
+          updateSelectInput(session, inputId = "split", choices = choices, selected = choices[4])
+        }else{
+          updateSelectInput(session, inputId = "row"  , choices = choices, selected = setting()$choices_row  )
+          updateSelectInput(session, inputId = "col"  , choices = choices, selected = setting()$choices_col  )
+          updateSelectInput(session, inputId = "value", choices = choices, selected = setting()$choices_value)
+          updateSelectInput(session, inputId = "split", choices = choices, selected = setting()$choices_split)
+        }
+      }
     })
+
     # Return data
     reactive(data_in)
 
