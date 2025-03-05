@@ -104,7 +104,7 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 Toshikazu Matsumura (2023) convex: for Convenient Excel. <https://matutosi.shinyapps.io/convex/> .
 
-## Todo
+## TODO
 
--   exampleのファイルの準備して，使えるようにする
--   pivoteaで設定ファイルを読み込めるようにする?
+-   exampleのファイルの準備して使えるようにする
+-   pivoteaで設定ファイルを読み込めるようにする
