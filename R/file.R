@@ -109,23 +109,16 @@ pivotea_uploadServer <- function(id){
     # update choices
     observeEvent(data_in(), {
       choices <- colnames(data_in())
-      if(input$use_example){
+      if(input$use_example | !is.null(setting)){
         updateSelectInput(session, inputId = "row"  , choices = choices, selected = setting()$choices_row  )
         updateSelectInput(session, inputId = "col"  , choices = choices, selected = setting()$choices_col  )
         updateSelectInput(session, inputId = "value", choices = choices, selected = setting()$choices_value)
         updateSelectInput(session, inputId = "split", choices = choices, selected = setting()$choices_split)
       }else{
-        if(is.null(setting)){
-          updateSelectInput(session, inputId = "row"  , choices = choices, selected = choices[1])
-          updateSelectInput(session, inputId = "col"  , choices = choices, selected = choices[2])
-          updateSelectInput(session, inputId = "value", choices = choices, selected = choices[3])
-          updateSelectInput(session, inputId = "split", choices = choices, selected = choices[4])
-        }else{
-          updateSelectInput(session, inputId = "row"  , choices = choices, selected = setting()$choices_row  )
-          updateSelectInput(session, inputId = "col"  , choices = choices, selected = setting()$choices_col  )
-          updateSelectInput(session, inputId = "value", choices = choices, selected = setting()$choices_value)
-          updateSelectInput(session, inputId = "split", choices = choices, selected = setting()$choices_split)
-        }
+        updateSelectInput(session, inputId = "row"  , choices = choices, selected = choices[1])
+        updateSelectInput(session, inputId = "col"  , choices = choices, selected = choices[2])
+        updateSelectInput(session, inputId = "value", choices = choices, selected = choices[3])
+        updateSelectInput(session, inputId = "split", choices = choices, selected = choices[4])
       }
     })
 
