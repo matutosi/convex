@@ -97,8 +97,3 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 松村 俊和 (2024) RとShinyを使ったエクセル便利ツール．<https://matutosi.shinyapps.io/convex/> .
 
 Toshikazu Matsumura (2023) convex: for Convenient Excel. <https://matutosi.shinyapps.io/convex/> .
-
-## TODO
-
--   exampleのファイルの準備して使えるようにする   
--   pivoteaで設定ファイルを読み込めるようにする   
