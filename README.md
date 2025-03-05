@@ -2,8 +2,8 @@
 
 エクセルの便利ツールを提供する予定です． 2025年2月時点では，以下の機能があります．
 
--   セルの強調表示\
--   文字列のピボットテーブル
+-   セルの強調表示   
+-   文字列のピボットテーブル   
 
 強調表示では，エクセルのシートに簡単に強調表示(塗りつぶし)を設定できます． 「強調文字」にセミコロンかカンマ区切りで入力した文字列を含むセルに対して，設定した「色」を着色できます． 複数ファイル，複数シートにも対応しています． 一度設定した後に，別のファイル，別の文字列，別の色で設定するときは，再読み込み(F5)してください．
 
@@ -11,8 +11,8 @@
 
 convex is planned to provide useful tools for Excel. On February 2025, the following functions are available.
 
--   Cell highlighting\
--   Pivot table of strings
+-   Cell highlighting   
+-   Pivot table of strings   
 
 Highlighting allows you to easily set highlighting (fill) cells on Excel sheets. Cells containing strings entered as semi-colons or comma-separated characters in the "Highlighting string" field can be coloured with a set "Highlighting colour". Multiple files and sheets are supported. To set new different file(s), different strings or different colour after setting once, reload the file (F5).
 
@@ -26,13 +26,13 @@ A string pivot table treats a string as if it were a pivot table. Pivot tables i
 
 注意
 
- - 使用したデータはセッション終了後に削除されるはずですが，機密情報は使用しないほうが良いかもしれません．\
-- 使用時間の制限が月ごとにありますので，突然しようできないことがあるかもしれません．その場合は，Rをインストールして自分のパソコンで実行することをオススメします．
+- 使用したデータはセッション終了後に削除されるはずですが，機密情報は使用しないほうが良いかもしれません．   
+- 使用時間の制限が月ごとにありますので，突然しようできないことがあるかもしれません．その場合は，Rをインストールして自分のパソコンで実行することをオススメします．   
 
 Note
 
- - Input data will be deleted at the end of the session, but recommended not to use sensitive information.\
-- Because of monthly limit, you may not be able to use it suddenly. In that case, I recommend that you install R and run it on your own computer.
+- Input data will be deleted at the end of the session, but recommended not to use sensitive information.   
+- Because of monthly limit, you may not be able to use it suddenly. In that case, I recommend that you install R and run it on your own computer.   
 
 ## Use on your PC
 
@@ -47,56 +47,46 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 ## How to use Highlighting
 
--   「highlight」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
+-   「highlight」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック   
+-   Click "hilight" tab and click "Browse" under "Select xlxs file(s)"   
+    <img src="images/hilight_init.png" width="60%"/>   
 
--   Click "hilight" tab and click "Browse" under "Select xlxs file(s)"\
-    <img src="images/hilight_init.png" width="60%"/>
+-   対象のファイルを選択(複数可)   
+-   Select file(s)   
+    <img src="images/hilight_input.png" width="30%"/>   
 
--   対象のファイルを選択(複数可)\
+-   強調したいセルに含まれる文字列を「強調文字」に入力．複数のときは，半角のセミコロンかカンマで区切る．色を変更したいときは，"Highlighting color"をクリック．   
+-   Input "Highlighting string". If multiple strings, separate with ';' or ','. To change color, click "Highlighting color".   
+    <img src="images/hilight_setting.png" width="60%"/>   
 
--   Select file(s)\
-    <img src="images/hilight_input.png" width="30%"/>
+-   「Download」をクリック．複数ファイルのときは，zip形式になるので，解凍する．   
+-   Click "Download". Multiple files will be ziped.   
 
--   強調したいセルに含まれる文字列を「強調文字」に入力．複数のときは，半角のセミコロンかカンマで区切る．色を変更したいときは，"Highlighting color"をクリック．\
-
--   Input "Highlighting string". If multiple strings, separate with ';' or ','. To change color, click "Highlighting color".\
-    <img src="images/hilight_setting.png" width="60%"/>
-
--   「Download」をクリック．複数ファイルのときは，zip形式になるので，解凍する．\
-
--   Click "Download". Multiple files will be ziped.
-
--   入力した文字列が強調表示される．\
-
--   Cells containing highlighting strings are highlighted.\
+-   入力した文字列が強調表示される．   
+-   Cells containing highlighting strings are highlighted.   
     <img src="images/hilight_output.png" width="60%"/>
 
 ## How to use Pivot
 
--   「pivotea」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック\
+-   「pivotea」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック   
+-   Click "pivotea" tab and click "Browse" under "Select xlxs file(s)"   
+    <img src="images/pivot_init.png" width="60%"/>   
 
--   Click "pivotea" tab and click "Browse" under "Select xlxs file(s)"\
-    <img src="images/pivot_init.png" width="60%"/>
+-   対象のファイルを選択(1つのみ)．   
+-   Select ONE file   
+    <img src="images/pivot_input.png" width="30%"/>   
 
--   対象のファイルを選択(1つのみ)．\
+-   「data」にデータが表示されるので，内容を確認可能．行，列，セルの値，シート分割にそれぞれ列名を入力．"区切り文字列は"セルの値に複数入力するときの区切りとして使用．   
+-   Input data will be shown in "data" tab, so you can check contents. Input rows, cols, values and split (sheet). "separater" will be used for multiple cell values.   
+    <img src="images/pivot_setting.png" width="40%"/>   
 
--   Select ONE file\
-    <img src="images/pivot_input.png" width="30%"/>
+-   「pivot」タブを選択するとピボット後の結果が表示される(シート分割しているときは，1シート目)   
+-   Pivoted table will be shown in "pivot" tab (first sheet when using split).   
+    <img src="images/pivot_preview.png" width="60%"/>   
 
--   「data」にデータが表示されるので，内容を確認可能．行，列，セルの値，シート分割にそれぞれ列名を入力．"区切り文字列は"セルの値に複数入力するときの区切りとして使用．
-
--   Input data will be shown in "data" tab, so you can check contents. Input rows, cols, values and split (sheet). "separater" will be used for multiple cell values.\
-    <img src="images/pivot_setting.png" width="40%"/>
-
--   「pivot」タブを選択するとピボット後の結果が表示される(シート分割しているときは，1シート目)\
-
--   Pivoted table will be shown in "pivot" tab (first sheet when using split).\
-    <img src="images/pivot_preview.png" width="60%"/>
-
--   「Download」をクリック．なお，「罫線」をチェックすると項目ごとに罫線が入り，「オートフィルタ」をチェックするとオートフィルタが設定される．\
-
--   Click "Download". You can use "border" and "autofilter" by checking button. \
-    <img src="images/pivot_output.png" width="60%"/>
+-   「Download」をクリック．なお，「罫線」をチェックすると項目ごとに罫線が入り，「オートフィルタ」をチェックするとオートフィルタが設定される．   
+-   Click "Download". You can use "border" and "autofilter" by checking button.    
+    <img src="images/pivot_output.png" width="60%"/>   
 
 ## 引用
 
@@ -104,7 +94,7 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 Toshikazu Matsumura (2023) convex: for Convenient Excel. <https://matutosi.shinyapps.io/convex/> .
 
-## Todo
+## TODO
 
--   exampleのファイルの準備して，使えるようにする
--   pivoteaで設定ファイルを読み込めるようにする?
+-   exampleのファイルの準備して使えるようにする   
+-   pivoteaで設定ファイルを読み込めるようにする   
