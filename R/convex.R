@@ -43,6 +43,9 @@ rows_wb_sheet <- function(wb, sheet){
 
   # wrapper for conditionalFormatting()
 set_bg_color <- function(wb, sheet, color = "#FFFF00", strings){
+  if(strings == ""){
+    return(wb)
+  }
   bg_color <- openxlsx::createStyle(bgFill = color)
   for(str in strings){
     openxlsx::conditionalFormatting(wb, sheet, 
