@@ -92,7 +92,7 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 -   Click "Download". You can use "border" and "autofilter" by checking button.    
     <img src="images/pivot_output.png" width="60%"/>   
 
-## 引用
+## Citation 引用
 
 松村 俊和 (2024) RとShinyを使ったエクセル便利ツール．<https://matutosi.shinyapps.io/convex/> .
 
