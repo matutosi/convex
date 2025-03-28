@@ -59,14 +59,13 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
         if isinstance(colors, str):
             colors = [colors] * len(keywords)
         for kwd, clr in zip(keywords, colors):
-            print(f'{clr=}')
+            print(f'{clr=}', f'{type(clr)=}')
             highlight_cell(ws, range_str, kwd, convert_color_name(clr), exact=exact)
     wb.save(out_xlsx)
     return out_xlsx
 
 
 def highlight_cell(sheet, range_str, keyword, color, exact=False):
-    print(f'{color=}')
     color_fill = PatternFill(start_color=color, end_color=color, fill_type='solid')
     if exact:
         condition = f'EXACT("{keyword}", A1)'
