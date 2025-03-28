@@ -2,7 +2,7 @@ import os
 import streamlit as st
 import highlight_xlsx
 
-keywords = st.text_input("Input keyword(s) to be highlighted", placeholder="separate by ; (e.g., keyword1;keyword2)")
+keywords = st.text_input("Input keyword(s) to be highlighted", value="", placeholder="separate by ; (e.g., keyword1;keyword2)")
 color = st.color_picker("Select a color", "#FFFF00")
 exact = st.checkbox("Exact match")
 

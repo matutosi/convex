@@ -18,6 +18,8 @@ def convert_color_name(color):
         'FFFF00'  # default to yellow
     """
     # if color matches "#xxxxxx" format
+    if color is None:
+        return 'FFFF00'
     if color[0] == "#":
         return color[1:]
     COLORS = {
@@ -48,6 +50,8 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
         df = pd.DataFrame(data, columns=columns)
         keywords = df.keywords
         colors = df.colors
+    if isinstance(keywords, str) and keywords == "":
+        return xlsx
     offset = 64 # need to convert number to character
     for ws in wb.worksheets:
         max_row = ws.max_row
@@ -59,20 +63,22 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
         if isinstance(colors, str):
             colors = [colors] * len(keywords)
         for kwd, clr in zip(keywords, colors):
-            print(f'{clr=}', f'{type(clr)=}')
             highlight_cell(ws, range_str, kwd, convert_color_name(clr), exact=exact)
     wb.save(out_xlsx)
     return out_xlsx
 
 
 def highlight_cell(sheet, range_str, keyword, color, exact=False):
-    color_fill = PatternFill(start_color=color, end_color=color, fill_type='solid')
-    if exact:
-        condition = f'EXACT("{keyword}", A1)'
+    if keyword is None:
+        pass
     else:
-        condition = f'SEARCH("{keyword}", A1)'
-    rule = FormulaRule(formula=[condition], fill=color_fill)
-    sheet.conditional_formatting.add(range_str, rule)
+        color_fill = PatternFill(start_color=color, end_color=color, fill_type='solid')
+        if exact:
+            condition = f'EXACT("{keyword}", A1)'
+        else:
+            condition = f'SEARCH("{keyword}", A1)'
+        rule = FormulaRule(formula=[condition], fill=color_fill)
+        sheet.conditional_formatting.add(range_str, rule)
 
 if __name__ == "__main__":
     import os
