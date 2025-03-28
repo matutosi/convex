@@ -49,20 +49,20 @@ streamlit run highlight_xslsx_web.py
 - excel data before highlighting  
     <img src="table.png"             width="60%"/>   
 
-- (任意) 「setting_for_highlight」というシートに強調したい文字列(keywords)と背景色(colors)を入力可能です
--  (optional) You can enter keywords and colors in the sheet named "setting_for_highlight".
+- (任意) 「setting_for_highlight」というシートに強調したい文字列(keywords)と背景色(colors)を入力可能です．   
+-  (optional) You can enter keywords and colors in the sheet named "setting_for_highlight".   
     <img src="settingwith_sheet.png" width="60%"/>   
 
-- 「Browse file」からエクセルのファイルを選択します．
-- Select an Excel file from "Browse file".
+- 「Browse file」からエクセルのファイルを選択します．   
+- Select an Excel file from "Browse file".   
     <img src="upload.png"            width="60%"/>   
 
-- 「Input keywords(s) to be highlighted」の下に強調したい文字列を入力します．複数の場合は，「;」(セミコロン)で区切ってください．
-- Enter the strings you want to highlight below "Input keywords(s) to be highlighted". If there are multiple strings, separate them with ";" (semicolon).
+- 「Input keywords(s) to be highlighted」の下に強調したい文字列を入力します．複数の場合は，「;」(セミコロン)で区切ってください．   
+- Enter the strings you want to highlight below "Input keywords(s) to be highlighted". If there are multiple strings, separate them with ";" (semicolon).    
     <img src="setting_with_web.png"  width="60%"/>   
 
-- 「DOWNLOAD HIGHLIGHTED FILE」で強調表示されたエクセルファイルをダウンロードできます．  
-- You can download the highlighted Excel file by clicking "DOWNLOAD HIGHLIGHTED FILE".
+- 「DOWNLOAD HIGHLIGHTED FILE」で強調表示されたエクセルファイルをダウンロードできます．   
+- You can download the highlighted Excel file by clicking "DOWNLOAD HIGHLIGHTED FILE".   
     <img src="highlighted.png"       width="60%"/>   
 
 
