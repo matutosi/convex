@@ -51,7 +51,7 @@ streamlit run highlight_xslsx_web.py
 
 - (任意) 「setting_for_highlight」というシートに強調したい文字列(keywords)と背景色(colors)を入力可能です．   
 -  (optional) You can enter keywords and colors in the sheet named "setting_for_highlight".   
-    <img src="settingwith_sheet.png" width="60%"/>   
+    <img src="setting_with_sheet.png" width="60%"/>   
 
 - 「Browse file」からエクセルのファイルを選択します．   
 - Select an Excel file from "Browse file".   
