@@ -58,7 +58,11 @@ streamlit run highlight_xslsx_web.py
     <img src="upload.png"            width="60%"/>   
 
 - 「Input keywords(s) to be highlighted」の下に強調したい文字列を入力します．複数の場合は，「;」(セミコロン)で区切ってください．   
+- 既定値では，文字列を含むセルを強調表示します．セルの内容と完全一致させたいときは，「Exact match」をチェックします．   
+- 既定値は黄色です．変更するときは，「Select color」から変更してください．   
 - Enter the strings you want to highlight below "Input keywords(s) to be highlighted". If there are multiple strings, separate them with ";" (semicolon).    
+- Enter the strings you want to highlight below "Input keywords(s) to be highlighted". If there are multiple strings, separate them with ";" (semicolon).   
+- By default, cells containing the strings are highlighted. If you want to match the contents of the cell exactly, check "Exact match".   
     <img src="setting_with_web.png"  width="60%"/>   
 
 - 「DOWNLOAD HIGHLIGHTED FILE」で強調表示されたエクセルファイルをダウンロードできます．   
