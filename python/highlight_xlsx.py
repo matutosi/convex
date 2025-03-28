@@ -51,7 +51,8 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
         keywords = df.keywords
         colors = df.colors
     if isinstance(keywords, str) and keywords == "":
-        return xlsx
+        wb.save(out_xlsx) # no change
+        return out_xlsx
     offset = 64 # need to convert number to character
     for ws in wb.worksheets:
         max_row = ws.max_row
