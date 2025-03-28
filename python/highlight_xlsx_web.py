@@ -2,6 +2,8 @@ import os
 import streamlit as st
 import highlight_xlsx
 
+st.link_button(label="How to use", url="https://github.com/matutosi/convex/tree/main/python")
+
 uploaded_file = st.file_uploader("Upload excel a file", type="xlsx", accept_multiple_files=False)
 
 keywords = st.text_input("Input keyword(s) to be highlighted", placeholder="separate by ; (e.g., keyword1;keyword2)")
