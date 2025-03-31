@@ -4,6 +4,8 @@ import openpyxl # Need to read xlsx
 from openpyxl.formatting.rule import FormulaRule
 from openpyxl.styles import PatternFill
 
+import read_settings
+
 def convert_color_name(color):
     """
     Converts a color name to its RGB value.
@@ -43,13 +45,10 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
     out_xlsx = xlsx.name.replace(".xlsx", "_highlighted.xlsx")
     wb = openpyxl.load_workbook(xlsx)
     sheets = wb.sheetnames
-    if "setting_for_highlight" in sheets:
-        ws = wb["setting_for_highlight"]
-        data = ws.values
-        columns = next(data)[0:]
-        df = pd.DataFrame(data, columns=columns)
-        keywords = df.keywords
-        colors = df.colors
+    setting_sheet = "setting_for_highlight"
+    if setting_sheet in sheets:
+        colnames = ["keywords", "colors"]
+        keywords, colors = read_settings.read_settings(wb, sheet=setting_sheet, colnames=colnames)
     if isinstance(keywords, str) and keywords == "":
         wb.save(out_xlsx) # no change
         return out_xlsx
@@ -67,7 +66,6 @@ def highlight_xlsx(xlsx, keywords="", colors="yellow", exact=False):
             highlight_cell(ws, range_str, kwd, convert_color_name(clr), exact=exact)
     wb.save(out_xlsx)
     return out_xlsx
-
 
 def highlight_cell(sheet, range_str, keyword, color, exact=False):
     if keyword is None:
