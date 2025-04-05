@@ -9,7 +9,10 @@ import read_settings
 import pivotea.pivot as pivot # pip install git+https://github.com/matutosi/pivoteapy.git
 
 # Set title
-st.title("Pivotea")
+st.set_page_config(
+    page_title = "Pivotea",
+    layout = "wide",
+)
 
 # col1, col2 = st.columns(2)
 tabs = ["data", "pivot"]
