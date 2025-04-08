@@ -8,6 +8,9 @@ import pivot_xlsx
 import read_settings
 import pivotea.pivot as pivot # pip install git+https://github.com/matutosi/pivoteapy.git
 
+WD = Path(__file__).parent
+os.chdir(WD)
+
 # Set title
 st.set_page_config(
     page_title = "Pivotea",
