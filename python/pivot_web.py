@@ -1,11 +1,9 @@
 import os
-import datetime
-import pandas as pd
+from pathlib import Path
 
 import streamlit as st
 
 import pivot_xlsx
-import read_settings
 import pivotea.pivot as pivot # pip install git+https://github.com/matutosi/pivoteapy.git
 
 WD = Path(__file__).parent
