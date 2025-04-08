@@ -34,12 +34,14 @@ def read_setting_pivot(wb, sheets):
     return setting
 
 def pivot_xlsx(uploaded_file):
-    out_xlsx = uploaded_file.name.replace(".xlsx", "_pivoted.xlsx")
+    if not isinstance(uploaded_file, str):
+        file_name = uploaded_file.name
+    else:
+        file_name = uploaded_file
+    out_xlsx = file_name.replace(".xlsx", "_pivoted.xlsx")
     wb = openpyxl.load_workbook(uploaded_file)
     df_input, setting = read_wb_pivot(wb)    
     return df_input, setting
-    # wb.save(out_xlsx)
-    # return out_xlsx
 
 def df_to_setting(df):
     """
