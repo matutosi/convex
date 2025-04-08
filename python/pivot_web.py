@@ -21,14 +21,22 @@ tab_data, tab_pivot = st.tabs(tabs)
 settings = st.sidebar
 
 with settings:
-    # File uploader for input Excel file
-    uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])
-    if uploaded_file:
+
+    # example file
+    use_example = st.checkbox("use example", value=True)
+    if use_example:
+        uploaded_file = "example_timetable.xlsx"
         df_input, setting = pivot_xlsx.pivot_xlsx(uploaded_file)
+    else:
+        # File uploader for input Excel file
+        uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx"])
+        if uploaded_file:
+            df_input, setting = pivot_xlsx.pivot_xlsx(uploaded_file)
+
+    if uploaded_file:
         items = df_input.columns
         if setting is None:
             # Read the uploaded Excel file
-            # items = df_input.columns
             rows   = st.multiselect("row(s)"  , items)
             cols   = st.multiselect("col(s)"  , items)
             values = st.multiselect("value(s)", items)
@@ -38,7 +46,6 @@ with settings:
             cols   = st.multiselect("col(s)"  , options=items, default=setting["col"]  )
             values = st.multiselect("value(s)", options=items, default=setting["value"])
             splits = st.multiselect("split(s)", options=items, default=setting["split"])
-        # Display the input DataFrame
 
 with tab_data:
     if uploaded_file:
