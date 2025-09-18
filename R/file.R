@@ -66,10 +66,23 @@ read_xlsx_possibly <- purrr::possibly(openxlsx::read.xlsx, otherwise = NULL)
 
 read_settings <- function(path_xlsx, sheet = "setting_for_pivotea"){
   setting <- read_xlsx_possibly(path_xlsx, sheet = sheet)
-  choices_row   <- dplyr::filter(setting, position=="row")$item
-  choices_col   <- dplyr::filter(setting, position=="col")$item
-  choices_value <- dplyr::filter(setting, position=="value")$item
-  choices_split <- dplyr::filter(setting, position=="split")$item
+  if(is.null(setting)){ # no sheet for settings
+    df <- openxlsx::read.xlsx(path_xlsx, sheet = 1)
+    cnames <- colnames(df)
+    choices_row   <- cnames[1]
+    choices_col   <- cnames[2]
+    choices_value <- cnames[3]
+    if(length(cnames) > 3){
+      choices_split <- cnames[4]
+    }else{
+      choices_split <- ""
+    }
+  }else{
+    choices_row   <- dplyr::filter(setting, position=="row")$item
+    choices_col   <- dplyr::filter(setting, position=="col")$item
+    choices_value <- dplyr::filter(setting, position=="value")$item
+    choices_split <- dplyr::filter(setting, position=="split")$item
+  }
   res <- 
     list(choices_row   = choices_row  , 
          choices_col   = choices_col  , 
