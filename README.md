@@ -81,10 +81,11 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
     <img src="images/pivot_setting.png" width="40%"/>   
 
 -   **注意**：エクセルの2つ目以降のシートに「setting_for_pivotea」という名前で行，列，セルの値，シート分割の値を保存してください．これがないとエラーになります．
-    [サンプルファイル](./R/example_timetable.xlsx)   
+    [サンプルファイル](https://github.com/matutosi/convex/raw/refs/heads/main/R/example_timetable.xlsx)   
 -   **Note**: Save the values for rows, columns, cells and sheet divisions in the second or later sheet named 'setting_for_pivotea', or an error will occur.   
     <img src="images/pivot_setting_auto.png" width="30%"/>   
-    [sample file](./R/example_timetable.xlsx)   
+    [sample file](https://github.com/matutosi/convex/raw/refs/heads/main/R/example_timetable.xlsx)   
+
 
 -   「pivot」タブを選択するとピボット後の結果が表示される(シート分割しているときは，1シート目)   
 -   Pivoted table will be shown in "pivot" tab (first sheet when using split).   
