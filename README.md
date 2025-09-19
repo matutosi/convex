@@ -47,6 +47,9 @@ shiny::runGitHub("matutosi/convex", subdir = "R")
 
 ## How to use Highlighting
 
+- 注意：2回目以降の実行時にうまくダウンロードできないときは，F5で再読み込みをしてください．
+- Note: If can not download successfully on subsequent runs, please press F5 to reload.
+
 -   「highlight」のタブをクリックし，左側の「Select xlxs file(s)」の下にある「Browse」をクリック   
 -   Click "hilight" tab and click "Browse" under "Select xlxs file(s)"   
     <img src="images/hilight_init.png" width="60%"/>   
