@@ -38,10 +38,10 @@ with settings:
         items = df_input.columns
         if setting is None:
             # Read the uploaded Excel file
-            rows   = st.multiselect("row(s)"  , items)
-            cols   = st.multiselect("col(s)"  , items)
-            values = st.multiselect("value(s)", items)
-            splits = st.multiselect("split(s)", items)
+            rows   = st.multiselect("row(s)"  , options=items, default=items[0])
+            cols   = st.multiselect("col(s)"  , options=items, default=items[1])
+            values = st.multiselect("value(s)", options=items, default=items[2])
+            splits = st.multiselect("split(s)", options=items)
         else:
             rows   = st.multiselect("row(s)"  , options=items, default=setting["row"]  )
             cols   = st.multiselect("col(s)"  , options=items, default=setting["col"]  )
