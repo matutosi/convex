@@ -55,4 +55,8 @@ with tab_data:
 with tab_pivot:
     if uploaded_file:
         pivoted = pivot(df_input, row = rows, col = cols, value = values, split = splits)
-        st.write(pivoted)
+        if not isinstance(pivoted, dict):
+            pivoted
+        else:
+            for p in pivoted.values():
+                st.dataframe(p)
