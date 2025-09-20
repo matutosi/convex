@@ -38,9 +38,22 @@ highlightServer <- function(id){
         purrr::map(openxlsx::loadWorkbook)
 
     col <- reactive(input$bg_color)
-    str <- reactive(input$bg_string)
     wid <- reactive(input$set_col_width)
     fil <- reactive(input$set_auto_filter)
+    str <- reactive(input$bg_string)
+
+  # WIP
+  #     str <- read_settings_highlight(wbs)
+  # 
+    # update  keyword
+  #     observeEvent(input$upload, {
+  #       updateTextInput(
+  #         session, 
+  #         inputId = "bg_string", 
+  #         value = str, 
+  #         label = "Highlighting string \u5f37\u8abf\u6587\u5b57", 
+  #         placeholder = "aaa;bbb;ccc (separate with ';' or ',' \u534a\u89d2\u306e\u30bb\u30df\u30b3\u30ed\u30f3\u304b\u30ab\u30f3\u30de\u533a\u5207\u308a)")
+  #     })
 
     wbs |> 
       purrr::map(
@@ -63,7 +76,6 @@ highlightServer <- function(id){
   #       wbs |> 
   #         purrr::map(walk_wb, add_filter)
   #     }
-
     wbs
 
   })

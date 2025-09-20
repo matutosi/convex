@@ -30,6 +30,19 @@ now <- function(){
      stringr::str_replace_all(":", "_")
 }
 
+  # WIP
+read_settings_highlight <- function(wbs, sheet = "setting_for_highlight"){
+  wbs <- files |> purrr::map(openxlsx::loadWorkbook)
+  sn <- wbs[[1]]$sheet_names
+  if(sheet %in% sn){
+    settings <- readWorkbook(wbs[[1]], sheet = sheet)
+    kwd <- paste0(settings$keywords, collapse=";")
+    return(kwd)
+  }else{
+    return("")
+  }
+}
+
 highlight_fileServer <- function(id, wbs){
   moduleServer(id, function(input, output, session){
 
@@ -64,7 +77,7 @@ highlight_fileServer <- function(id, wbs){
 ## Server for pivotea
 read_xlsx_possibly <- purrr::possibly(openxlsx::read.xlsx, otherwise = NULL)
 
-read_settings <- function(path_xlsx, sheet = "setting_for_pivotea"){
+read_settings_pivot <- function(path_xlsx, sheet = "setting_for_pivotea"){
   setting <- read_xlsx_possibly(path_xlsx, sheet = sheet)
   if(is.null(setting)){ # no sheet for settings
     df <- openxlsx::read.xlsx(path_xlsx, sheet = 1)
@@ -112,10 +125,10 @@ pivotea_uploadServer <- function(id){
     # setting
     setting <- reactive({
       if(input$use_example){
-        read_settings("timetable.xlsx")
+        read_settings_pivot("timetable.xlsx")
       }else{
         req(input$upload)
-        read_settings(input$upload$datapath)
+        read_settings_pivot(input$upload$datapath)
       }
     })
 
